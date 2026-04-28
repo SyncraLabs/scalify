@@ -632,7 +632,7 @@ export default function DesarrolloWebPage() {
                     <span>Solicitar presupuesto gratis</span>
                     <ArrowRight size={18} className="relative z-10 transition-transform group-hover:translate-x-1" />
                   </ContactButton>
-                  <a href="https://wa.me/34600000000" className="btn-secondary text-sm sm:text-base w-full sm:w-auto">
+                  <a href="https://wa.me/34604561592" className="btn-secondary text-sm sm:text-base w-full sm:w-auto">
                     Hablar por WhatsApp
                   </a>
                 </div>

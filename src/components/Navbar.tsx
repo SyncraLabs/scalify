@@ -20,6 +20,7 @@ const navLinks = [
   { name: "Servicios", href: "/servicios", dropdown: services },
   { name: "Casos de Éxito", href: "/casos" },
   { name: "Sobre Nosotros", href: "/nosotros" },
+  { name: "Contacto", href: "/contacto" },
 ];
 
 export function Navbar() {

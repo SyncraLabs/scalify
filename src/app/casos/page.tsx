@@ -1150,7 +1150,7 @@ function FinalCTA() {
                 <ArrowRight size={18} className="relative z-10" />
               </ContactButton>
               <a
-                href="https://wa.me/34600000000"
+                href="https://wa.me/34604561592"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-secondary text-sm sm:text-base w-full sm:w-auto"

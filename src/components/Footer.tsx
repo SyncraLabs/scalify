@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { ArrowUpRight, Mail, Phone, MapPin } from "lucide-react";
-import { ContactButton } from "@/components/ContactButton";
 
 const footerLinks = {
   servicios: [
@@ -16,6 +15,7 @@ const footerLinks = {
   empresa: [
     { name: "Sobre Nosotros", href: "/nosotros" },
     { name: "Casos de Éxito", href: "/casos" },
+    { name: "Contacto", href: "/contacto" },
   ],
   legal: [
     { name: "Aviso Legal", href: "/legal/aviso-legal" },
@@ -51,10 +51,10 @@ export function Footer() {
                 <Mail size={14} /> info@scalifylabs.es
               </a>
               <a
-                href="tel:+34600000000"
+                href="tel:+34604561592"
                 className="flex items-center gap-2 hover:text-white transition-colors"
               >
-                <Phone size={14} /> +34 600 000 000
+                <Phone size={14} /> +34 604 56 15 92
               </a>
               <span className="flex items-center gap-2">
                 <MapPin size={14} /> Canarias · Barcelona · Madrid
@@ -105,15 +105,6 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <ContactButton className="text-sm text-gray-400 hover:text-white transition-colors duration-200 inline-flex items-center gap-1 group">
-                  Contacto
-                  <ArrowUpRight
-                    size={12}
-                    className="opacity-0 group-hover:opacity-100 transition-opacity"
-                  />
-                </ContactButton>
-              </li>
             </ul>
           </div>
 
