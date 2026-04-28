@@ -111,7 +111,7 @@ export function Navbar() {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 8, scale: 0.96 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-64 glass rounded-xl p-2 shadow-xl shadow-black/30"
+                      className="absolute top-full left-0 mt-2 w-64 rounded-xl p-2 bg-[#0a0a1a]/95 backdrop-blur-xl border border-white/10 shadow-2xl shadow-black/50"
                     >
                       {link.dropdown.map((item) => (
                         <Link
