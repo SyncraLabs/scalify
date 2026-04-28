@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ContactFormProvider } from "@/components/ContactFormModal";
+import { AutoContactPopup } from "@/components/AutoContactPopup";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <AutoContactPopup />
         </ContactFormProvider>
       </body>
     </html>
