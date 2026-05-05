@@ -5,79 +5,26 @@ import { motion } from "framer-motion";
 import {
   Mail,
   Phone,
-  MapPin,
-  MessageCircle,
   Send,
   Loader2,
   CheckCircle,
+  MessageCircle,
   Clock,
   Shield,
   Zap,
-  ArrowRight,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 
-const channels = [
-  {
-    icon: MessageCircle,
-    label: "WhatsApp",
-    value: "+34 604 56 15 92",
-    desc: "Respuesta inmediata en horario laboral",
-    href: "https://wa.me/34604561592",
-    external: true,
-    accent: "#25D366",
-  },
-  {
-    icon: Phone,
-    label: "Teléfono",
-    value: "+34 604 56 15 92",
-    desc: "Lun · Vie  ·  9:00 - 19:00",
-    href: "tel:+34604561592",
-    accent: "#6C3AED",
-  },
-  {
-    icon: Mail,
-    label: "Email",
-    value: "info@scalifylabs.es",
-    desc: "Te respondemos en menos de 24h",
-    href: "mailto:info@scalifylabs.es",
-    accent: "#3B82F6",
-  },
-];
-
 const trustBadges = [
-  { icon: Clock, label: "Respuesta < 24h" },
+  { icon: Clock, label: "Respuesta en menos de 24h" },
   { icon: Shield, label: "Datos protegidos (RGPD)" },
   { icon: Zap, label: "Primera consulta gratis" },
-];
-
-const faqs = [
-  {
-    q: "¿Cuánto tarda en responder vuestro equipo?",
-    a: "Respondemos cualquier mensaje del formulario o email en menos de 24h laborables. Por WhatsApp solemos contestar en minutos durante horario de oficina.",
-  },
-  {
-    q: "¿La primera consulta es gratuita?",
-    a: "Sí. Programamos una llamada de 30 minutos sin coste para entender tu proyecto y proponer la mejor estrategia. Solo si encajamos seguimos adelante.",
-  },
-  {
-    q: "¿Trabajáis con empresas fuera de España?",
-    a: "Sí. Aunque tenemos sede en Canarias, Barcelona y Madrid, trabajamos en remoto con clientes en toda Europa y Latinoamérica.",
-  },
-  {
-    q: "¿Qué información debo incluir en el mensaje?",
-    a: "Cuéntanos brevemente a qué se dedica tu negocio, qué objetivo tienes (más leads, ventas, branding...) y, si los conoces, tu presupuesto y plazos. Cuanto más sepamos, mejor podemos ayudarte.",
-  },
 ];
 
 export function ContactPageClient() {
   const [form, setForm] = useState({
     nombre: "",
     email: "",
-    telefono: "",
-    empresa: "",
-    servicio: "",
-    presupuesto: "",
     mensaje: "",
   });
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
@@ -85,16 +32,14 @@ export function ContactPageClient() {
   );
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const fireConfetti = () => {
     const end = Date.now() + 1500;
-    const colors = ["#6C3AED", "#06B6D4", "#F472B6", "#FACC15"];
+    const colors = ["#6C3AED", "#3B82F6", "#EC4899", "#A78BFA"];
     (function frame() {
       confetti({
         particleCount: 4,
@@ -119,14 +64,11 @@ export function ContactPageClient() {
     setStatus("sending");
 
     try {
-      const res = await fetch(
-        "https://n8n.srv1256702.hstgr.cloud/webhook/scalifyformweb1",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        }
-      );
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
       if (!res.ok) throw new Error("Error");
       setStatus("success");
       fireConfetti();
@@ -139,12 +81,13 @@ export function ContactPageClient() {
     <div className="relative overflow-hidden">
       {/* Ambient gradient backdrop */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-[radial-gradient(circle,rgba(108,58,237,0.18),transparent_60%)] blur-3xl" />
-        <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.12),transparent_60%)] blur-3xl" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[900px] rounded-full bg-[radial-gradient(circle,rgba(108,58,237,0.18),transparent_60%)] blur-3xl animate-pulse-glow" />
+        <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(59,130,246,0.14),transparent_60%)] blur-3xl" />
+        <div className="absolute bottom-0 -left-40 w-[500px] h-[500px] rounded-full bg-[radial-gradient(circle,rgba(236,72,153,0.10),transparent_60%)] blur-3xl" />
       </div>
 
       {/* HERO */}
-      <section className="relative pt-32 sm:pt-40 pb-12 sm:pb-16 px-4 sm:px-6">
+      <section className="relative pt-32 sm:pt-40 pb-10 sm:pb-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -162,10 +105,13 @@ export function ContactPageClient() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-6 leading-[1.05]"
+            className="font-heading font-bold text-4xl sm:text-5xl lg:text-6xl text-white mb-6 leading-[1.1] tracking-tight"
           >
-            Hablemos de tu{" "}
-            <span className="text-gradient">próximo proyecto</span>
+            Tú Pones la Visión,
+            <br />
+            <span className="text-gradient">
+              Nosotros el Código y la Estrategia
+            </span>
           </motion.h1>
 
           <motion.p
@@ -174,8 +120,10 @@ export function ContactPageClient() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-base sm:text-lg text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed"
           >
-            Cuéntanos qué tienes en mente y te respondemos en menos de 24h con
-            una propuesta clara. Sin compromisos, sin letra pequeña.
+            Transforma tu visión en resultados reales. Somos tu partner experto
+            en desarrollo de software y marketing digital. Impulsa tu negocio
+            con tecnología y estrategia.{" "}
+            <span className="text-white font-medium">¡Contáctanos!</span>
           </motion.p>
 
           <motion.div
@@ -194,57 +142,15 @@ export function ContactPageClient() {
         </div>
       </section>
 
-      {/* CHANNELS */}
-      <section className="relative px-4 sm:px-6 mb-12 sm:mb-20">
-        <div className="max-w-5xl mx-auto grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {channels.map((ch, i) => (
-            <motion.a
-              key={ch.label}
-              href={ch.href}
-              target={ch.external ? "_blank" : undefined}
-              rel={ch.external ? "noopener noreferrer" : undefined}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative p-6 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:bg-white/[0.05] transition-all overflow-hidden"
-            >
-              <div
-                className="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-20 blur-2xl group-hover:opacity-40 transition-opacity"
-                style={{ background: ch.accent }}
-              />
-              <div
-                className="relative w-11 h-11 rounded-xl flex items-center justify-center mb-4 border border-white/10"
-                style={{ background: `${ch.accent}1a` }}
-              >
-                <ch.icon size={20} style={{ color: ch.accent }} />
-              </div>
-              <p className="text-xs uppercase tracking-wider text-gray-500 mb-1">
-                {ch.label}
-              </p>
-              <p className="font-heading font-semibold text-white mb-1 break-all">
-                {ch.value}
-              </p>
-              <p className="text-sm text-gray-400">{ch.desc}</p>
-              <ArrowRight
-                size={16}
-                className="absolute top-6 right-6 text-gray-500 group-hover:text-white group-hover:translate-x-1 transition-all"
-              />
-            </motion.a>
-          ))}
-        </div>
-      </section>
-
-      {/* FORM + INFO */}
-      <section className="relative px-4 sm:px-6 mb-20 sm:mb-28">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-5 gap-8 lg:gap-12">
-          {/* Form */}
+      {/* FORM */}
+      <section className="relative px-4 sm:px-6 mb-16 sm:mb-20">
+        <div className="max-w-2xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-3 relative rounded-3xl overflow-hidden"
+            className="relative rounded-3xl overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#0d0d1a] via-[#111127] to-[#0d0d1a]" />
             <div className="absolute inset-0 bg-white/[0.02]" />
@@ -256,7 +162,7 @@ export function ContactPageClient() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="text-center py-12"
+                  className="text-center py-10"
                 >
                   <motion.div
                     initial={{ scale: 0 }}
@@ -270,8 +176,8 @@ export function ContactPageClient() {
                     ¡Mensaje recibido!
                   </h3>
                   <p className="text-gray-400 max-w-md mx-auto mb-6">
-                    Hemos recibido tu mensaje correctamente. Nuestro equipo te
-                    contactará en menos de 24h laborables.
+                    Hemos recibido tu mensaje correctamente. Te contactamos en
+                    menos de 24h laborables.
                   </p>
                   <a
                     href="https://wa.me/34604561592"
@@ -288,95 +194,38 @@ export function ContactPageClient() {
                   <h2 className="font-heading font-bold text-2xl sm:text-3xl text-white mb-2">
                     Cuéntanos tu proyecto
                   </h2>
-                  <p className="text-sm text-gray-400 mb-8">
-                    Cuanta más información nos des, más concreta será nuestra
-                    propuesta.
+                  <p className="text-sm text-gray-400 mb-7">
+                    Rellena el formulario y te respondemos en menos de 24h.
                   </p>
 
                   <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <Field
-                        id="nombre"
-                        name="nombre"
-                        label="Nombre completo *"
-                        value={form.nombre}
-                        onChange={handleChange}
-                        placeholder="Tu nombre"
-                        required
-                      />
-                      <Field
-                        id="empresa"
-                        name="empresa"
-                        label="Empresa"
-                        value={form.empresa}
-                        onChange={handleChange}
-                        placeholder="Nombre de tu empresa"
-                      />
-                    </div>
+                    <Field
+                      id="nombre"
+                      name="nombre"
+                      label="Nombre completo"
+                      value={form.nombre}
+                      onChange={handleChange}
+                      placeholder="Tu nombre"
+                      required
+                    />
 
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <Field
-                        id="email"
-                        name="email"
-                        type="email"
-                        label="Email *"
-                        value={form.email}
-                        onChange={handleChange}
-                        placeholder="tu@email.com"
-                        required
-                      />
-                      <Field
-                        id="telefono"
-                        name="telefono"
-                        type="tel"
-                        label="Teléfono"
-                        value={form.telefono}
-                        onChange={handleChange}
-                        placeholder="+34 ..."
-                      />
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <SelectField
-                        id="servicio"
-                        name="servicio"
-                        label="Servicio de interés"
-                        value={form.servicio}
-                        onChange={handleChange}
-                        options={[
-                          "Desarrollo Web",
-                          "Posicionamiento SEO",
-                          "Redes Sociales",
-                          "Campañas Ads",
-                          "Diseño Gráfico",
-                          "Embudo de Ventas",
-                          "Programación a Medida",
-                          "Otro / Aún no lo sé",
-                        ]}
-                      />
-                      <SelectField
-                        id="presupuesto"
-                        name="presupuesto"
-                        label="Presupuesto orientativo"
-                        value={form.presupuesto}
-                        onChange={handleChange}
-                        options={[
-                          "Menos de 1.000€",
-                          "1.000€ - 3.000€",
-                          "3.000€ - 6.000€",
-                          "6.000€ - 12.000€",
-                          "Más de 12.000€",
-                          "Aún no lo sé",
-                        ]}
-                      />
-                    </div>
+                    <Field
+                      id="email"
+                      name="email"
+                      type="email"
+                      label="Email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="tu@email.com"
+                      required
+                    />
 
                     <div>
                       <label
                         htmlFor="mensaje"
-                        className="block text-xs font-medium text-gray-300 mb-1.5"
+                        className="block text-xs font-semibold text-gray-300 mb-1.5"
                       >
-                        Cuéntanos qué necesitas *
+                        Cuéntanos qué proyecto tienes en mente
                       </label>
                       <textarea
                         id="mensaje"
@@ -385,7 +234,7 @@ export function ContactPageClient() {
                         rows={5}
                         value={form.mensaje}
                         onChange={handleChange}
-                        placeholder="Describe brevemente tu proyecto, objetivos y plazos..."
+                        placeholder="Describe brevemente tu proyecto, objetivos o lo que necesitas..."
                         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/30 transition-colors resize-none"
                       />
                     </div>
@@ -432,135 +281,34 @@ export function ContactPageClient() {
 
             <div className="absolute inset-0 rounded-3xl gradient-border pointer-events-none" />
           </motion.div>
-
-          {/* Side info */}
-          <motion.aside
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="lg:col-span-2 flex flex-col gap-6"
-          >
-            <div className="p-6 sm:p-8 rounded-2xl bg-white/[0.03] border border-white/10">
-              <h3 className="font-heading font-semibold text-xl text-white mb-5">
-                ¿Prefieres llamar?
-              </h3>
-              <div className="space-y-4">
-                <a
-                  href="tel:+34604561592"
-                  className="flex items-start gap-3 group"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-brand-primary/10 border border-brand-primary/20 flex items-center justify-center shrink-0">
-                    <Phone size={16} className="text-brand-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white group-hover:text-brand-primary transition-colors">
-                      +34 604 56 15 92
-                    </p>
-                    <p className="text-xs text-gray-500">Lun-Vie · 9:00-19:00</p>
-                  </div>
-                </a>
-                <a
-                  href="mailto:info@scalifylabs.es"
-                  className="flex items-start gap-3 group"
-                >
-                  <div className="w-10 h-10 rounded-lg bg-brand-secondary/10 border border-brand-secondary/20 flex items-center justify-center shrink-0">
-                    <Mail size={16} className="text-brand-secondary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white group-hover:text-brand-secondary transition-colors break-all">
-                      info@scalifylabs.es
-                    </p>
-                    <p className="text-xs text-gray-500">Respuesta en &lt; 24h</p>
-                  </div>
-                </a>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-pink-500/10 border border-pink-500/20 flex items-center justify-center shrink-0">
-                    <MapPin size={16} className="text-pink-400" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium text-white">
-                      Canarias · Barcelona · Madrid
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Trabajamos 100% en remoto
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <a
-              href="https://wa.me/34604561592"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="relative p-6 sm:p-8 rounded-2xl overflow-hidden border border-[#25D366]/30 bg-gradient-to-br from-[#25D366]/10 to-transparent group"
-            >
-              <div className="absolute -top-12 -right-12 w-32 h-32 rounded-full bg-[#25D366]/20 blur-3xl group-hover:bg-[#25D366]/30 transition-colors" />
-              <div className="relative">
-                <MessageCircle
-                  size={28}
-                  className="text-[#25D366] mb-3"
-                />
-                <h3 className="font-heading font-semibold text-lg text-white mb-2">
-                  ¿Quieres respuesta inmediata?
-                </h3>
-                <p className="text-sm text-gray-300 mb-4">
-                  Escríbenos por WhatsApp. Solemos contestar en minutos.
-                </p>
-                <span className="inline-flex items-center gap-2 text-sm font-medium text-[#25D366] group-hover:gap-3 transition-all">
-                  Abrir WhatsApp
-                  <ArrowRight size={16} />
-                </span>
-              </div>
-            </a>
-          </motion.aside>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="relative px-4 sm:px-6 pb-24 sm:pb-32">
+      {/* CONTACT METHODS */}
+      <section className="relative px-4 sm:px-6 pb-20 sm:pb-28">
         <div className="max-w-3xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-10 sm:mb-14"
+            transition={{ duration: 0.5 }}
+            className="grid sm:grid-cols-2 gap-4 sm:gap-6"
           >
-            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-white mb-3">
-              Preguntas frecuentes
-            </h2>
-            <p className="text-gray-400">
-              Lo que más nos preguntan antes de empezar a trabajar juntos.
-            </p>
+            <ContactMethod
+              icon={Mail}
+              label="Email"
+              value="info@scalifylabs.es"
+              href="mailto:info@scalifylabs.es"
+              gradient="from-brand-primary to-brand-secondary"
+            />
+            <ContactMethod
+              icon={Phone}
+              label="Teléfono"
+              value="+34 604 56 15 92"
+              href="tel:+34604561592"
+              gradient="from-brand-secondary to-brand-pink"
+            />
           </motion.div>
-
-          <div className="space-y-3">
-            {faqs.map((f, i) => (
-              <motion.details
-                key={f.q}
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="group rounded-xl bg-white/[0.03] border border-white/10 hover:border-white/20 transition-colors overflow-hidden"
-              >
-                <summary className="flex items-center justify-between gap-4 p-5 sm:p-6 cursor-pointer list-none">
-                  <span className="font-heading font-medium text-white text-base sm:text-lg">
-                    {f.q}
-                  </span>
-                  <span className="w-7 h-7 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shrink-0 group-open:rotate-45 transition-transform">
-                    <span className="block w-3 h-px bg-white" />
-                    <span className="block w-px h-3 bg-white -ml-[7px]" />
-                  </span>
-                </summary>
-                <div className="px-5 sm:px-6 pb-5 sm:pb-6 text-sm text-gray-400 leading-relaxed">
-                  {f.a}
-                </div>
-              </motion.details>
-            ))}
-          </div>
         </div>
       </section>
     </div>
@@ -590,7 +338,7 @@ function Field({
     <div>
       <label
         htmlFor={id}
-        className="block text-xs font-medium text-gray-300 mb-1.5"
+        className="block text-xs font-semibold text-gray-300 mb-1.5"
       >
         {label}
       </label>
@@ -608,45 +356,37 @@ function Field({
   );
 }
 
-function SelectField({
-  id,
-  name,
+function ContactMethod({
+  icon: Icon,
   label,
   value,
-  onChange,
-  options,
+  href,
+  gradient,
 }: {
-  id: string;
-  name: string;
+  icon: React.ComponentType<{ size?: number; className?: string }>;
   label: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options: string[];
+  href: string;
+  gradient: string;
 }) {
   return (
-    <div>
-      <label
-        htmlFor={id}
-        className="block text-xs font-medium text-gray-300 mb-1.5"
+    <a
+      href={href}
+      className="group relative flex items-center gap-4 p-5 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:bg-white/[0.05] transition-all overflow-hidden"
+    >
+      <div
+        className={`relative w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 bg-gradient-to-br ${gradient} shadow-lg shadow-brand-primary/20 group-hover:scale-105 transition-transform`}
       >
-        {label}
-      </label>
-      <select
-        id={id}
-        name={name}
-        value={value}
-        onChange={onChange}
-        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white text-sm focus:outline-none focus:border-brand-primary/50 focus:ring-1 focus:ring-brand-primary/30 transition-colors appearance-none bg-[url('data:image/svg+xml;utf8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2212%22%20height=%2212%22%20viewBox=%220%200%2024%2024%22%20fill=%22none%22%20stroke=%22%23999%22%20stroke-width=%222%22%20stroke-linecap=%22round%22%20stroke-linejoin=%22round%22><polyline%20points=%226%209%2012%2015%2018%209%22></polyline></svg>')] bg-no-repeat bg-[right_1rem_center]"
-      >
-        <option value="" className="bg-[#0d0d1a]">
-          Selecciona una opción
-        </option>
-        {options.map((opt) => (
-          <option key={opt} value={opt} className="bg-[#0d0d1a]">
-            {opt}
-          </option>
-        ))}
-      </select>
-    </div>
+        <Icon size={22} className="text-white" />
+      </div>
+      <div className="min-w-0">
+        <p className="text-xs uppercase tracking-wider text-gray-500 mb-0.5">
+          {label}
+        </p>
+        <p className="font-heading font-semibold text-white text-base sm:text-lg break-all group-hover:text-gradient transition-colors">
+          {value}
+        </p>
+      </div>
+    </a>
   );
 }

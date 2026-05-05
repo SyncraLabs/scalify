@@ -58,14 +58,11 @@ function ContactModal({ onClose }: { onClose: () => void }) {
     setStatus("sending");
 
     try {
-      const res = await fetch(
-        "https://n8n.srv1256702.hstgr.cloud/webhook/scalifyformweb1",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
-        }
-      );
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
       if (!res.ok) throw new Error("Error");
       setStatus("success");
       fireConfetti();
