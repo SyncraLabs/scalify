@@ -124,6 +124,14 @@ export function Footer() {
                   </Link>
                 </li>
               ))}
+              <li>
+                <button
+                  onClick={() => window.scalifyOpenCookieSettings?.()}
+                  className="text-sm text-gray-400 hover:text-white transition-colors duration-200 text-left"
+                >
+                  Configurar Cookies
+                </button>
+              </li>
             </ul>
           </div>
         </div>

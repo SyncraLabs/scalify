@@ -104,8 +104,31 @@ export default function PrivacidadPage() {
             solicitado.
           </p>
 
+          <h2 className="text-white text-xl font-heading font-semibold">
+            9. Cookies, analítica y publicidad
+          </h2>
+          <p>
+            Cuando el usuario presta su consentimiento a través del banner de
+            cookies, este sitio utiliza el <strong>Píxel de Meta (Facebook)</strong>,
+            una herramienta de <strong>Meta Platforms Ireland Limited</strong>,
+            para medir y optimizar nuestras campañas publicitarias en Facebook e
+            Instagram. Esta tecnología puede recopilar datos como la dirección
+            IP, el identificador de dispositivo/navegador y las páginas
+            visitadas. Estos datos pueden implicar una{" "}
+            <strong>transferencia internacional</strong> a Estados Unidos,
+            amparada en las Cláusulas Contractuales Tipo de la Comisión Europea
+            y el marco de protección de datos UE-EE. UU. (Data Privacy
+            Framework). El usuario puede retirar su consentimiento en cualquier
+            momento desde el enlace «Configurar Cookies» del pie de página. Para
+            más detalle, consulta nuestra{" "}
+            <a href="/legal/cookies" className="text-purple-400 hover:text-purple-300">
+              Política de Cookies
+            </a>
+            .
+          </p>
+
           <p className="text-gray-500 text-xs mt-10">
-            Última actualización: Marzo 2026
+            Última actualización: Junio 2026
           </p>
         </div>
       </div>

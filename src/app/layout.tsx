@@ -5,6 +5,7 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ContactFormProvider } from "@/components/ContactFormModal";
 import { AutoContactPopup } from "@/components/AutoContactPopup";
+import { CookieConsent } from "@/components/CookieConsent";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -58,6 +59,8 @@ export default function RootLayout({
           <Footer />
           <AutoContactPopup />
         </ContactFormProvider>
+        {/* Meta Pixel con consentimiento previo (RGPD / LSSI-CE) */}
+        <CookieConsent />
       </body>
     </html>
   );

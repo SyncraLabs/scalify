@@ -48,8 +48,45 @@ export default function CookiesPage() {
             de productos o servicios.
           </p>
 
+          <h3 className="text-white text-lg font-heading font-medium">
+            Cookies de marketing y publicidad
+          </h3>
+          <p>
+            Se utilizan para mostrar publicidad relevante y medir la eficacia de
+            nuestras campañas. En concreto, este sitio utiliza el{" "}
+            <strong>Píxel de Meta (Facebook)</strong>, una tecnología de{" "}
+            <strong>Meta Platforms Ireland Limited</strong>, que registra
+            eventos como la visita a páginas (PageView) para optimizar y medir
+            nuestros anuncios en Facebook e Instagram. Estas cookies{" "}
+            <strong>solo se activan si el usuario presta su consentimiento</strong>{" "}
+            a través del banner de cookies. Puedes consultar más información en
+            la{" "}
+            <a
+              href="https://www.facebook.com/privacy/policy"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-purple-400 hover:text-purple-300"
+            >
+              Política de Privacidad de Meta
+            </a>
+            .
+          </p>
+
           <h2 className="text-white text-xl font-heading font-semibold">
-            3. Gestión de cookies
+            3. Consentimiento y retirada
+          </h2>
+          <p>
+            Al acceder por primera vez a nuestro sitio web se muestra un banner
+            donde puedes <strong>aceptar</strong> o <strong>rechazar</strong> el
+            uso de cookies no esenciales (analíticas y de publicidad). Las
+            cookies de publicidad, incluido el Píxel de Meta, no se cargan hasta
+            que aceptas. Puedes cambiar o retirar tu decisión en cualquier
+            momento desde el enlace{" "}
+            <strong>«Configurar Cookies»</strong> situado en el pie de página.
+          </p>
+
+          <h2 className="text-white text-xl font-heading font-semibold">
+            4. Gestión de cookies desde el navegador
           </h2>
           <p>
             El usuario puede configurar su navegador para aceptar o rechazar
@@ -76,7 +113,7 @@ export default function CookiesPage() {
           </ul>
 
           <h2 className="text-white text-xl font-heading font-semibold">
-            4. Actualización de la política
+            5. Actualización de la política
           </h2>
           <p>
             ScalifyLabs se reserva el derecho de modificar esta política de
@@ -86,7 +123,7 @@ export default function CookiesPage() {
           </p>
 
           <h2 className="text-white text-xl font-heading font-semibold">
-            5. Más información
+            6. Más información
           </h2>
           <p>
             Si tiene dudas sobre esta política de cookies, puede contactarnos
@@ -97,7 +134,7 @@ export default function CookiesPage() {
           </p>
 
           <p className="text-gray-500 text-xs mt-10">
-            Última actualización: Marzo 2026
+            Última actualización: Junio 2026
           </p>
         </div>
       </div>
