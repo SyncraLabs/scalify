@@ -38,3 +38,8 @@ next-env.d.ts
 
 # claude code
 .claude/
+
+# Local tooling (no versionar)
+.mcp.json
+.playwright-mcp/
+out/

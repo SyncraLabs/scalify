@@ -1,5 +1,15 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { HeroSection } from "@/components/HeroSection";
+import { JsonLd } from "@/components/JsonLd";
+import { homeFaqs } from "@/lib/faq";
+import { canonical, faqSchema } from "@/lib/seo";
+
+export const metadata: Metadata = {
+  description:
+    "Agencia de marketing digital en España. Escalamos tu negocio con desarrollo web, SEO, redes sociales, publicidad y automatización de embudos. 7+ años, 100+ negocios escalados.",
+  alternates: canonical("/"),
+};
 
 // Lazy load below-the-fold sections — they don't block initial paint
 const ServicesSection = dynamic(
@@ -49,6 +59,11 @@ const TestimonialsSection = dynamic(
     })),
   { ssr: true }
 );
+const FaqSection = dynamic(
+  () =>
+    import("@/components/FaqSection").then((m) => ({ default: m.FaqSection })),
+  { ssr: true }
+);
 const CTASection = dynamic(
   () =>
     import("@/components/CTASection").then((m) => ({ default: m.CTASection })),
@@ -65,6 +80,7 @@ const WhatsAppButton = dynamic(
 export default function Home() {
   return (
     <>
+      <JsonLd data={faqSchema(homeFaqs)} />
       <HeroSection />
       <ServicesSection />
       <ShowcaseSection />
@@ -73,6 +89,7 @@ export default function Home() {
       <TechMarquee />
       <StatsSection />
       <TestimonialsSection />
+      <FaqSection />
       <CTASection />
       <WhatsAppButton />
     </>

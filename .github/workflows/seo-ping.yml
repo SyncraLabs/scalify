@@ -1,0 +1,27 @@
+name: SEO · Re-indexación (IndexNow)
+
+# Avisa a los buscadores (Bing, Yandex, Seznam vía IndexNow) de que
+# reindexen el sitio. Útil tras publicar contenido nuevo.
+on:
+  schedule:
+    # Lunes a las 06:00 UTC, cada semana.
+    - cron: "0 6 * * 1"
+  workflow_dispatch: {} # permite lanzarlo a mano desde la pestaña Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Enviar sitemap a IndexNow
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://scalifylabs.es' }}
+          INDEXNOW_KEY: ${{ vars.INDEXNOW_KEY || 'b1247c64c000b647acd6f964ccd3d040' }}
+        run: node scripts/seo-ping.mjs

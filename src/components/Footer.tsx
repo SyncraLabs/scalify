@@ -15,6 +15,7 @@ const footerLinks = {
   empresa: [
     { name: "Sobre Nosotros", href: "/nosotros" },
     { name: "Casos de Éxito", href: "/casos" },
+    { name: "Blog", href: "/blog" },
     { name: "Contacto", href: "/contacto" },
   ],
   legal: [
