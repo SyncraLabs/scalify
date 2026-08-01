@@ -5,7 +5,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const CONSENT_KEY = "scalify_cookie_consent";
-const PIXEL_ID = "832902779577705";
+// Píxeles de Meta activos. Se inicializan todos: cada uno recibe los mismos
+// eventos, así ninguna campaña se queda sin medición.
+const PIXEL_IDS = ["832902779577705", "2930612760619508"];
 
 type Consent = "accepted" | "declined";
 
@@ -79,7 +81,7 @@ export function CookieConsent() {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '${PIXEL_ID}');
+            ${PIXEL_IDS.map((id) => `fbq('init', '${id}');`).join(" ")}
             fbq('track', 'PageView');
           `}
         </Script>
